@@ -89,6 +89,38 @@ function toastMsg(msg, iconStr = 'success') {
     Swal.fire({ title: msg, icon: iconStr, toast: true, position: 'top-end', showConfirmButton: false, timer: 1500 });
 }
 
+// ================ الكشف والجرد الشهري للزبائن ================
+// دالة جديدة لحساب المباع والمستلم والديون للزبائن
+function renderCustomerMonthlySummary() {
+    let monthFilter = document.getElementById('customerMonthFilter').value;
+    let totalSold = 0;
+    let totalPaid = 0;
+    
+    customers.forEach(c => {
+        (c.transactions || []).forEach(t => {
+            // المعاملات محفوظة بصيغة DD/MM/YYYY
+            let tDateParts = t.date.split('/');
+            let tMonth = tDateParts.length === 3 ? tDateParts[1] : 0;
+            
+            // التحقق مما إذا كان الفلتر على الكل أو يطابق الشهر المحدد
+            if (monthFilter === "0" || parseInt(tMonth) === parseInt(monthFilter)) {
+                if (t.type === 'sell') {
+                    totalSold += t.total;
+                } else if (t.type === 'pay') {
+                    totalPaid += t.amount;
+                }
+            }
+        });
+    });
+
+    let totalDebt = totalSold - totalPaid;
+
+    // تحديث الأرقام في الواجهة
+    document.getElementById('stat-sold').innerText = formatMoney(totalSold);
+    document.getElementById('stat-paid').innerText = formatMoney(totalPaid);
+    document.getElementById('stat-debt').innerText = formatMoney(totalDebt);
+}
+
 // ================ إدارة الزبائن ================
 function getCustomerBalance(c) {
     let bal = 0;
@@ -100,6 +132,8 @@ function getCustomerBalance(c) {
 }
 
 function renderCustomers(searchTerm = '') {
+    renderCustomerMonthlySummary(); // استدعاء دالة التحديث هنا ليتم تحديث الأرقام باستمرار
+    
     const list = document.getElementById('customersList');
     list.innerHTML = '';
     
