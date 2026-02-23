@@ -582,6 +582,47 @@ function showMaintenance() {
     }, 3000);
 }
 
+// ================ النسخ الاحتياطية ================
+function downloadBackup() {
+    let data = {
+        customers: customers,
+        inventory: inventory,
+        monthlySales: monthlySales
+    };
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+    let downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "almoamal_backup_" + new Date().toISOString().split('T')[0] + ".json");
+    document.body.appendChild(downloadAnchorNode); 
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+    toastMsg('تم تنزيل النسخة الاحتياطية بنجاح');
+}
+
+function restoreBackup(event) {
+    let file = event.target.files[0];
+    if (!file) return;
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            let data = JSON.parse(e.target.result);
+            if (data.customers) customers = data.customers;
+            if (data.inventory) inventory = data.inventory;
+            if (data.monthlySales) monthlySales = data.monthlySales;
+            saveData();
+            renderCustomers();
+            renderInventory();
+            renderMonthlySales();
+            updateAlertBadge();
+            toastMsg('تم استعادة النسخة الاحتياطية بنجاح');
+            closeModal('settingsModal');
+        } catch (err) {
+            toastMsg('حدث خطأ في قراءة الملف', 'error');
+        }
+    };
+    reader.readAsText(file);
+}
+
 // الإقلاع وتحديث البيانات المجلوبة من قاعدة البيانات بعد تسجيل الدخول بنجاح
 window.initAppAfterAuth = () => { 
     customers = JSON.parse(localStorage.getItem('almoamal_c_db')) || [];
