@@ -1,0 +1,52 @@
+/* إخفاء وتجميل شريط التمرير للهواتف */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+/* تنسيق احترافي وموحد لحقول الإدخال */
+.custom-input {
+    width: 100%;
+    background-color: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 0.8rem 1rem;
+    font-family: inherit;
+    font-weight: 700;
+    color: #1e293b;
+    transition: all 0.3s ease;
+    outline: none;
+}
+.custom-input:focus {
+    border-color: #0f766e;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.15);
+}
+
+/* حركة أزرار الشريط السفلي */
+.nav-btn.active { color: #0f766e; }
+.nav-btn.active i { transform: translateY(-4px) scale(1.15); color: #0f766e; transition: all 0.3s; }
+
+/* كلاسات الأنيميشن المنبثقة للـ Modals بلمسة ناعمة */
+.modal-show { opacity: 1 !important; }
+.modal-box-show { transform: scale(1) !important; }
+.modal-box-slide-show { transform: translateY(0) scale(1) !important; }
+
+/* أنيميشن ثلاثي الأبعاد 3D Animation لرسالة الصيانة */
+.maintenance-3d-box {
+    transform: perspective(1000px) rotateX(90deg) scale(0.8);
+    opacity: 0;
+    transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: center;
+}
+.maintenance-3d-box.show-3d {
+    transform: perspective(1000px) rotateX(0deg) scale(1);
+    opacity: 1;
+}
+
+/* حركات التنقل بين التبويبات */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.tab-section.active { display: block; animation: fadeIn 0.4s ease; }
+.tab-section.hidden { display: none; }
