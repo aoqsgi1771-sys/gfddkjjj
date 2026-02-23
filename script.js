@@ -116,9 +116,9 @@ function renderCustomers(searchTerm = '') {
                     <h3 class="font-bold text-lg text-slate-800">${c.name}</h3>
                     <div class="text-[11px] font-bold ${bal > 0 ? 'text-red-500 bg-red-50' : 'text-primary bg-light'} px-2 py-1 rounded w-fit">الباقي: <span dir="ltr">${formatMoney(bal)}</span> د.ع</div>
                 </div>
-                <div class="flex gap-2" onclick="event.stopPropagation()">
-                    <button class="w-10 h-10 rounded-full bg-slate-50 text-secondary hover:bg-slate-200 transition" onclick="editCustomer('${c.id}')"><i class="fa-solid fa-pen"></i></button>
-                    <button class="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-200 transition" onclick="deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i></button>
+                <div class="flex gap-2">
+                    <button type="button" class="w-10 h-10 rounded-full bg-slate-50 text-secondary hover:bg-slate-200 transition" onclick="event.stopPropagation(); event.preventDefault(); editCustomer('${c.id}')"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-200 transition" onclick="event.stopPropagation(); event.preventDefault(); deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>`;
     });
@@ -190,8 +190,8 @@ function renderInventory() {
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <button class="w-10 h-10 rounded-full bg-slate-50 text-secondary hover:bg-slate-200 transition" onclick="editInventory('${i.id}')"><i class="fa-solid fa-pen"></i></button>
-                    <button class="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-200 transition" onclick="deleteInventory('${i.id}')"><i class="fa-solid fa-trash"></i></button>
+                    <button type="button" class="w-10 h-10 rounded-full bg-slate-50 text-secondary hover:bg-slate-200 transition" onclick="event.stopPropagation(); editInventory('${i.id}')"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-200 transition" onclick="event.stopPropagation(); deleteInventory('${i.id}')"><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>`;
     });
@@ -239,6 +239,7 @@ function deleteInventory(id) {
 // ================ تفاصيل ومعاملات الزبون (بيع / تسديد) ================
 function openDetails(id) {
     activeCustomer = customers.find(c => c.id == id);
+    if(!activeCustomer) return;
     document.getElementById('d-name').innerText = activeCustomer.name;
     updateDetails();
     document.getElementById('detailsModal').classList.remove('hidden');
@@ -512,8 +513,8 @@ function renderMonthlySales() {
                     <div class="text-sm font-black text-primary mt-1" dir="ltr">${formatMoney(m.price)} د.ع</div>
                 </div>
                 <div class="flex gap-2">
-                    <button class="w-10 h-10 rounded-full bg-slate-50 text-secondary hover:bg-slate-200 transition" onclick="editMonthlySale('${m.id}')"><i class="fa-solid fa-pen"></i></button>
-                    <button class="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-200 transition" onclick="deleteMonthlySale('${m.id}')"><i class="fa-solid fa-trash"></i></button>
+                    <button type="button" class="w-10 h-10 rounded-full bg-slate-50 text-secondary hover:bg-slate-200 transition" onclick="event.stopPropagation(); editMonthlySale('${m.id}')"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-200 transition" onclick="event.stopPropagation(); deleteMonthlySale('${m.id}')"><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>`;
     });
