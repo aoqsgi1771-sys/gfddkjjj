@@ -1,5 +1,5 @@
 // تعريف اسم للإصدار لتسهيل تغييره مستقبلاً
-const CACHE_NAME = 'gfdd-store-v2';
+const CACHEB_NAME = 'gfdd-store-v2';
 
 // قائمة الملفات التي نريد تخزينها
 const FILES_TO_CACHE = [
